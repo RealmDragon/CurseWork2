@@ -23,3 +23,18 @@ def format_operation(operation):
     return f"""{date} {operation['description']}
 {from_value} -> {to_value}
 {amount} {currency}"""
+def get_last_operations(filename='operations.json'):
+    """Возвращает список из 5 последних выполненных операций."""
+    with open(filename, 'r', encoding='utf-8') as f:
+        operations = json.load(f)
+
+    executed_operations = []
+    for op in operations:
+        try:
+            if op['state'] == 'EXECUTED':
+                executed_operations.append(op)
+        except KeyError:
+            print(f"Ошибка: Отсутствует ключ 'state' в операции {op['id']}")
+
+    executed_operations.sort(key=lambda x: x['date'], reverse=True)
+    return [format_operation(op) for op in executed_operations[:5]]
