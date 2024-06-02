@@ -6,6 +6,9 @@ def mask_card_number(card_number):
     """Маскирует номер карты."""
     return f"XXXX XX** **** {card_number[-4:]}"
 
+def mask_account_number(account_number):
+    """Маскирует номер счета."""
+    return f"**{account_number[-4:]}"
 
 def format_operation(operation):
     """Форматирует данные об операции для вывода."""
@@ -23,6 +26,7 @@ def format_operation(operation):
     return f"""{date} {operation['description']}
 {from_value} -> {to_value}
 {amount} {currency}"""
+
 def get_last_operations(filename='operations.json'):
     """Возвращает список из 5 последних выполненных операций."""
     with open(filename, 'r', encoding='utf-8') as f:
@@ -38,3 +42,8 @@ def get_last_operations(filename='operations.json'):
 
     executed_operations.sort(key=lambda x: x['date'], reverse=True)
     return [format_operation(op) for op in executed_operations[:5]]
+
+if __name__ == '__main__':
+    for operation in get_last_operations():
+        print(operation)
+        print()
