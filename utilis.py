@@ -41,4 +41,7 @@ def test_get_last_operations():
 
 def test_get_last_operations_empty():
     with pytest.raises(FileNotFoundError):
+
+        get_last_operations('nonexistent_file.json')
+=======
         get_last_operations('nonexistent_file.json')
